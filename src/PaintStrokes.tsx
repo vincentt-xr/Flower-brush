@@ -1,7 +1,7 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import * as THREE from "three";
-import { ScreenImage, ScreenSpaceUI, type ScreenTransform2DSettings, XRModel } from "@vincentt-xr/sdk";
+import { ScreenImage, ScreenSpaceUI, XRModel } from "@vincentt-xr/sdk";
 import { useXRModelNode, type XRModelNodeHandTracking } from "@vincentt-xr/sdk/low-level";
 import { BRUSH_CONFIG, SCENE_CONFIG } from "./brushConfig";
 import { distance, isPeaceSign, normalizedToCanvas, stampBetween, stampFlower, type BrushPoint } from "./brushUtils";
@@ -119,21 +119,29 @@ export const PaintStrokes = forwardRef<PaintStrokesHandle>((_, ref) => {
     });
   });
 
-  const transform: ScreenTransform2DSettings = {
-    enabled: true,
-    position: { x: 0, y: 0 },
-    size: BRUSH_CONFIG.canvas,
-    pivot: [0.5, 0.5],
-    rotation: 0,
-    scale2D: { x: 1, y: 1 },
-    referencePixelsPerUnit: 32,
-    renderOrder: SCENE_CONFIG.paintRenderOrder,
-    overlay: true,
-    visible: true,
-    showTransformGuides: false,
-  };
-
-  return <ScreenSpaceUI><ScreenImage name="Paint Strokes" source={{ kind: "texture", texture }} transform={transform} transparent renderOrder={SCENE_CONFIG.paintRenderOrder} /></ScreenSpaceUI>;
+  return (
+    <ScreenSpaceUI>
+      <ScreenImage
+        name="Paint Strokes"
+        source={{ kind: "texture", texture }}
+        transform={{
+          enabled: true,
+          position: { x: 0, y: 0 },
+          size: BRUSH_CONFIG.canvas,
+          pivot: [0.5, 0.5],
+          rotation: 0,
+          scale2D: { x: 1, y: 1 },
+          referencePixelsPerUnit: 32,
+          renderOrder: SCENE_CONFIG.paintRenderOrder,
+          overlay: true,
+          visible: true,
+          showTransformGuides: false,
+        }}
+        transparent
+        renderOrder={SCENE_CONFIG.paintRenderOrder}
+      />
+    </ScreenSpaceUI>
+  );
 });
 
 PaintStrokes.displayName = "PaintStrokes";
