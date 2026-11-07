@@ -15,8 +15,6 @@ export const BRUSH_CONFIG = {
 } as const;
 
 export const SCENE_CONFIG = {
-  frameImage: "images/frame.png",
-  frameRenderOrder: 2000,
   paintRenderOrder: 100,
 } as const;
 
